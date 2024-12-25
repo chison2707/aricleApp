@@ -2,10 +2,8 @@ import express, { Express, Request, Response } from "express"
 import dotenv from "dotenv";
 import * as database from "./config/database";
 import { ApolloServer } from "apollo-server-express";
-import { resolvers } from "./resolvers";
 import { typeDefs } from "./typeDefs/index.typeDef";
-
-
+import { resolvers } from "./resolvers/index.resolvers";
 
 const startServer = async () => {
     dotenv.config();
@@ -14,8 +12,7 @@ const startServer = async () => {
     const port: number | string = process.env.PORT || 3000;
 
     // graphQl
-
-    const apolloServer = new ApolloServer({ typeDefs: typeDefs, resolvers });
+    const apolloServer = new ApolloServer({ typeDefs: typeDefs, resolvers: resolvers });
 
     await apolloServer.start();
 
