@@ -1,4 +1,4 @@
-import express, { Express, Request, Response } from "express"
+import express from "express"
 import dotenv from "dotenv";
 import * as database from "./config/database";
 import { ApolloServer } from "apollo-server-express";
