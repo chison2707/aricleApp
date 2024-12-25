@@ -10,7 +10,8 @@ export const resolversArticle = {
                 curentPage,
                 limitItem,
                 fillterKey,
-                fillterValue
+                fillterValue,
+                keyword
             } = args;
 
             const find = {
@@ -34,6 +35,13 @@ export const resolversArticle = {
                 find[fillterKey] = fillterValue;
             }
             // end fillter
+
+            // search
+            if (keyword) {
+                const keywordRegex = new RegExp(keyword, "i");
+                find["title"] = keywordRegex;
+            }
+            // end search
 
             const article = await Article.find(find).sort(sort).limit(limitItem).skip(skip);
             return article;
