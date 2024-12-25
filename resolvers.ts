@@ -35,6 +35,15 @@ export const resolvers = {
             return category;
         },
     },
+    Article: {
+        category: async (article) => {
+            const category = await Category.findOne({
+                _id: article.categoryId,
+                deleted: false
+            });
+            return category;
+        },
+    },
     Mutation: {
         createArticle: async (_, args) => {
             const { article } = args;
