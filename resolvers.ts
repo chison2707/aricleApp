@@ -2,9 +2,6 @@ import Article from "./models/article.model";
 
 export const resolvers = {
     Query: {
-        hello: () => {
-            return "Hello world!"
-        },
         getListArticle: async () => {
             const article = await Article.find({
                 deleted: false
@@ -40,6 +37,19 @@ export const resolvers = {
             });
 
             return "Delete success";
+        },
+        updateArticle: async (_, args) => {
+            const { id, article } = args;
+
+            await Article.updateOne({
+                _id: id
+            }, article);
+
+            const record = await Article.findOne({
+                _id: id
+            });
+
+            return record;
         }
     }
 };
