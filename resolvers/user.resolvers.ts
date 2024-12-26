@@ -3,6 +3,32 @@ import { User } from "../models/user.model";
 import md5 from "md5";
 
 export const resolversUser = {
+    Query: {
+        getUser: async (_, args) => {
+            const { id } = args;
+
+            const inforUser = await User.findOne({
+                _id: id,
+                deleted: false
+            });
+
+            if (!inforUser) {
+                return {
+                    code: 400,
+                    message: "Người dùng không tồn tại"
+                }
+            } else {
+                return {
+                    code: 200,
+                    message: "Lấy thông tin người dùng thành công",
+                    id: inforUser.id,
+                    fullName: inforUser.fullName,
+                    email: inforUser.email,
+                    token: inforUser.token
+                }
+            }
+        }
+    },
     Mutation: {
         registerUser: async (_, args) => {
             const { user } = args;
