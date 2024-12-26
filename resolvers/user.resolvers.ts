@@ -33,6 +33,37 @@ export const resolversUser = {
                     token: data.token
                 }
             }
+        },
+        loginUser: async (_, args) => {
+            const { email, password } = args.user;
+
+
+            const inforUser = await User.findOne({
+                email: email,
+                deleted: false
+            });
+
+            if (!inforUser) {
+                return {
+                    code: 400,
+                    message: "Email không tồn tại"
+                }
+            }
+            if (md5(password) !== inforUser.password) {
+                return {
+                    code: 400,
+                    message: "Mật khẩu không đúng"
+                }
+            }
+
+            return {
+                code: 200,
+                message: "Đăng nhập thành công",
+                id: inforUser.id,
+                fullName: inforUser.fullName,
+                email: inforUser.email,
+                token: inforUser.token
+            }
         }
     }
 };
